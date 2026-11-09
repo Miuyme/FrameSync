@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <NoWarn>CS0067</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../Shared/FrameSync.Shared/FrameSync.Shared.csproj" />
+    <ProjectReference Include="../../Server/FrameSync.Server/FrameSync.Server.csproj" ReferenceOutputAssembly="false" />
+    <Compile Include="../../../Assets/Scripts/Network/*.cs" Link="Client/%(Filename)%(Extension)" />
+    <Compile Include="../../../Assets/WebSocket/WebSocket.cs" Link="Transport/WebSocket.cs" />
+    <Compile Include="../../../Assets/WebSocket/WebSocketTypes.cs" Link="Transport/WebSocketTypes.cs" />
+    <Compile Include="../../../Assets/WebSocket/IWebSocket.cs" Link="Transport/IWebSocket.cs" />
+  </ItemGroup>
+</Project>

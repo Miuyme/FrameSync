@@ -1,0 +1,37 @@
+# Unity generated files
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Bb]uild/
+/[Bb]uilds/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# IDE and .NET generated files (also inside FrameSyncDemo)
+**/.vs/
+/.vscode/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userprefs
+/*.csproj
+/*.sln
+/*.slnx
+/.vsconfig
+
+# Local verification artifacts and pre-edit backups
+/Docs/**/Before/
+/Docs/**/UnityCompile/
+*.log
+
+# Local secrets and OS metadata
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+.DS_Store
+Thumbs.db

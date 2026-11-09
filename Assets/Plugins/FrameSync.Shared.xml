@@ -1,0 +1,379 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FrameSync.Shared</name>
+    </assembly>
+    <members>
+        <member name="T:FrameSync.Shared.BufferedCommand">
+            <summary>
+            客户端待发送的帧输入
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.BufferedCommand.Frame">
+            <summary>
+            帧序号
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.BufferedCommand.Command">
+            <summary>
+            该帧输入
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.CommandBuffer">
+            <summary>
+            客户端输入缓冲区
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.CommandBuffer.TryEnqueue(System.Int32,FrameSync.Shared.PlayerCommand)">
+            <summary>
+            添加一条输入
+            必须严格按照帧编号递增
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.CommandBuffer.TryDequeue(FrameSync.Shared.BufferedCommand@)">
+            <summary>
+            取出下一条待发送输入
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.CommandBuffer.TryPeek(FrameSync.Shared.BufferedCommand@)">
+            <summary>
+            查看下一条输入，但不移除
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.CommandBuffer.Clear">
+            <summary>
+            清空缓冲区
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.CommandRecorder">
+            <summary>
+            帧输入记录器
+            保存已经提交的完整帧
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.CommandRecorder.Record(FrameSync.Shared.FramePacket)">
+            <summary>
+            记录完整帧
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.CommandRecorder.GetFrame(System.Int32)">
+            <summary>
+            获取指定帧
+            返回独立副本
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.FrameClock">
+            <summary>
+            固定逻辑帧时钟
+            只管理时间，不负责执行游戏逻辑
+            </summary>
+        </member>
+        <member name="P:FrameSync.Shared.FrameClock.IsTickDue">
+            <summary>
+            是否已经到达下一逻辑帧的时间
+            </summary>
+        </member>
+        <member name="P:FrameSync.Shared.FrameClock.InterpolationAlpha">
+            <summary>
+            当前插值比例
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.FrameClock.Accumulate(System.Double)">
+            <summary>
+            累积经过的时间
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.FrameClock.ConsumeTick">
+            <summary>
+            消耗一个逻辑帧的时间
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.FrameExecutor">
+            <summary>
+            游戏逻辑帧执行器
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.FrameExecutor.Execute(FrameSync.Shared.FramePacket)">
+            <summary>
+            执行一帧
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.FrameManager">
+            <summary>
+            服务器帧管理器
+            收集玩家输入，按照顺序生成完整帧
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.FrameManager.PendingFrame">
+            <summary>
+            尚未完成的帧
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.FrameManager.SubmitInput(System.Int32,System.Int32,FrameSync.Shared.PlayerCommand)">
+            <summary>
+            提交某个玩家在指定帧的输入
+            </summary>
+            <param name="playerId">玩家ID</param>
+            <param name="targetFrame">提交的帧ID</param>
+            <param name="command">玩家指令</param>
+            <returns></returns>
+        </member>
+        <member name="M:FrameSync.Shared.FrameManager.TryBuildNextFrame(FrameSync.Shared.FramePacket@)">
+            <summary>
+            尝试生成下一帧完整输入
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.FramePacket">
+            <summary>
+            一帧游戏输入
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.FramePacket.GetCommand(System.Int32)">
+            <summary>
+            获取玩家输入
+            </summary>
+            <param name="playerId"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:FrameSync.Shared.FramePacket.CopyCommands">
+            <summary>
+            获取输入数组副本
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.GameWorld.PositionScale">
+            <summary>
+            1000逻辑单位= 1 Unity单位
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.GameWorld.TickRate">
+            <summary>
+            游戏逻辑帧率
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.GameWorld.MoveUnitsPerTick">
+            <summary>
+            每逻辑帧移动100个单位
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.GameWorld.DiagonalScale">
+            <summary>
+            对角线的整数近似系数
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.GameWorld.players">
+            <summary>
+            所有玩家的逻辑状态
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.GameWorld.GetPlayerState(System.Int32)">
+            <summary>
+            获取玩家状态
+            </summary>
+            <param name="playerId"></param>
+            <returns>返回struct副本，外部不能直接修改内部状态</returns>
+        </member>
+        <member name="M:FrameSync.Shared.GameWorld.CalculateHash">
+            <summary>
+            计算当前世界状态的hash，用于检查不同模拟实例是否一致
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FrameSync.Shared.GameWorld.AddInt(System.UInt64,System.Int32)">
+            <summary>
+            FNV-1a 64为Hash
+            按固定字节顺序处理整数
+            </summary>
+            <param name="hash"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FrameSync.Shared.GameWorld.CaptureSnapshot">
+            <summary>
+            保存当前游戏世界状态
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.GameWorld.RestoreSnapshot(FrameSync.Shared.GameWorldSnapshot)">
+            <summary>
+            恢复游戏世界状态
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.GameWorld.CopyStateTo(FrameSync.Shared.PlayerState[])">
+            <summary>
+            复制当前世界状态到外部预分配数组
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.GameWorld.RestoreStateFrom(System.Int32,FrameSync.Shared.PlayerState[])">
+            <summary>
+            从预分配数组恢复完整世界状态
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.GameWorldSnapshot">
+            <summary>
+            游戏世界快照
+            保存某个逻辑帧结束后的完整状态
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.InputSubmitResult.Accepted">
+            <summary>
+            成功提交
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.InputSubmitResult.InvalidPlayer">
+            <summary>
+            玩家ID无效
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.InputSubmitResult.InvalidFrame">
+            <summary>
+            帧编号无效
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.InputSubmitResult.TooLate">
+            <summary>
+            提交的帧已经完成
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.InputSubmitResult.Duplicate">
+            <summary>
+            同一玩家重复提交同一帧
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.InputSubmitResult.TooFarAhead">
+            <summary>
+            提交的帧距离当前帧过远
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.PlayerState">
+            <summary>
+            玩家当前逻辑状态1000逻辑单位等于Unity中1单位 1000=1
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.ClientInputMessage">
+            <summary>
+            客户端发送的输入消息
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.ClientPingMessage">
+            <summary>
+            可序列化的客户端ping消息类
+            用于客户端与服务器之间的通信，用于检测网络延迟和同步
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.InputCommandDto">
+            <summary>
+            网络传输用的单个玩家输入
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.ServerMessage">
+            <summary>
+            服务端发送给客户端的消息
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.ServerMessage.type">
+            <summary>
+            welcome / start / frame / error
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.ServerMessage.playerId">
+            <summary>
+            welcome时使用
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.ServerMessage.frame">
+            <summary>
+            frame时使用
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.ServerMessage.stateHash">
+            <summary>
+            服务端模拟后的状态Hash
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.ServerMessage.message">
+            <summary>
+            error时使用
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.ServerMessage.inputDelay">
+            <summary>
+            服务器指定的输入延迟
+            </summary>
+        </member>
+        <member name="F:FrameSync.Shared.ServerMessage.serverReceiveTimeMs">
+            <summary>Server monotonic receive timestamp t1, in milliseconds.</summary>
+        </member>
+        <member name="F:FrameSync.Shared.ServerMessage.serverSendTimeMs">
+            <summary>Server monotonic send timestamp t2, in milliseconds.</summary>
+        </member>
+        <member name="T:FrameSync.Shared.RollbackSimulator">
+            <summary>
+            固定容量的客户端预测与回滚系统
+            当前版本固定支持两名玩家
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.RollbackSimulator.TryGetAuthoritativePlayerState(System.Int32,System.Int32,FrameSync.Shared.PlayerState@)">
+            <summary>Only expose reconciled snapshots; never return speculative state for remote rendering.</summary>
+        </member>
+        <member name="M:FrameSync.Shared.RollbackSimulator.RecordLocalInput(System.Int32,FrameSync.Shared.PlayerCommand)">
+            <summary>
+            记录还没有执行过的本地输入
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.RollbackSimulator.AdvancePredictionThrough(System.Int32,System.String@)">
+            <summary>
+            预测执行到指定帧
+            超过预测范围时自动停在允许的最大帧
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.RollbackSimulator.ReceiveAuthoritativeFrame(FrameSync.Shared.FramePacket,System.UInt64,System.Boolean@,System.String@)">
+            <summary>
+            收到服务端权威帧并校正预测
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.RollbackSimulator.ExecuteFrame(System.Int32,FrameSync.Shared.RollbackSimulator.FrameRecord,System.String@)">
+            <summary>
+            执行一帧
+            不为输入数组分配新内存
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.RollbackSimulator.RollbackFrom(System.Int32,System.String@)">
+            <summary>
+            恢复到错误帧之前，重新执行到原预测帧
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.SnapshotRingBuffer">
+            <summary>
+            固定容量的游戏状态快照环形缓冲区
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.SnapshotRingBuffer.Save(FrameSync.Shared.GameWorld)">
+            <summary>
+            保存当前帧结束后的状态
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.SnapshotRingBuffer.Contains(System.Int32)">
+            <summary>
+            判断指定帧的快照是否存在
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.SnapshotRingBuffer.TryGetPlayerState(System.Int32,System.Int32,FrameSync.Shared.PlayerState@)">
+            <summary>Read a state copy without restoring or modifying the simulation.</summary>
+        </member>
+        <member name="M:FrameSync.Shared.SnapshotRingBuffer.TryRestore(FrameSync.Shared.GameWorld,System.Int32)">
+            <summary>
+            将世界恢复到指定帧
+            </summary>
+        </member>
+        <member name="M:FrameSync.Shared.SnapshotRingBuffer.InvalidateFrom(System.Int32)">
+            <summary>
+            回滚时使指定帧之后的旧快照失效
+            </summary>
+        </member>
+        <member name="T:FrameSync.Shared.StateChecker">
+            <summary>
+            不同游戏世界的状态比较器
+            </summary>
+        </member>
+    </members>
+</doc>
